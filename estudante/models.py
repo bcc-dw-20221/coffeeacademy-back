@@ -4,7 +4,7 @@ from cpf_field.models import CPFField
 
 # Create your models here.
 class Alunos(models.Model):
-     sexo_choices = (
+    sexo_choices = (
         ('H', 'Homem Cis'), 
         ('M', 'Mulher Cis'),
         ('K', 'Homem Trans'),
@@ -69,4 +69,38 @@ class Alunos(models.Model):
         return self,matricula
 
 
+class Matricula(models.Model):
+    '''id_matricula = models.OneToOneField(
+        get_user_model(),
+        max_length = 14
+        primary_key = true
+        on_delete = models.PROTECT
+        related_name = "aluno",
+    )'''
 
+    #curso = models.ForeignKey(cursos, blank = False)
+    data_matricula = models.DateTimeField()
+    usuario_responsavel = models.CharField(max_length = 100, blank = False, unique = False)
+
+    def __str__(self) -> str:
+       return f"Matricula do(a) {self.aluno.nome}"
+
+class Pais(models.Model):
+   #id_pais = models.ForeignKey(aluno, blank = False)
+    nome_pai = models.CharField(max_length = 100, blank = False, unique = False)
+    nome_mae = models.CharField(max_length = 100, blank = False, unique = False)
+    email = models.EmailField()
+    senha = models.CharField(max_length = 50, blank = False, unique = False) #Verificar: Documentação Django para Password
+
+    def __str__(self) -> str:
+        return f"Pais do(a) {self.aluno.nome}"
+
+class Egresso(models.Model):
+    cpf = CPFField('cpf')#.ForeignKey(aluno, blank = False, unique = True)
+    nome_egresso = models.CharField(max_length = 100, blank = False, unique = False)
+    email = models.EmailField()
+    senha = models.CharField(max_length = 50, blank = False, unique = False) #Verificar: Documentação Django para Password
+    #curso = models.ForeignKey(cursos, blank = False)
+    
+    def __str__(self) -> str:
+        return f"Nome do Egresso {self.aluno.nome}"
