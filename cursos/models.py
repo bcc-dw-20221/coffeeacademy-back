@@ -1,5 +1,6 @@
-from time import clock_settime
+#from time import clock_settime
 from django.db import models
+from django.contrib.auth import get_user_model
 """from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from somewhere import handle_uploaded_file
@@ -87,3 +88,23 @@ class Disciplina(models.Model):
             form = UploadFileForm()
         return render(request, 'upload.html', {'form': form})
 """
+
+class Frequencia(models.Model):
+     
+    id_disciplina = models.ForeignKey(
+         get_user_model(),
+         max_length = 14,
+         primary_key = True,
+         on_delete = models.CASCADE
+         #related_name = "matricula",
+    )
+
+    data_aula = models.DateField()
+
+    titulo_dias_aula = models.CharField(max_length = 255, default=True)
+
+    DATE_FIELD = ['lista_dias_aula']
+    REQUIRED_FIELDS = ['titulo_dias_aula'] 
+
+    def __str__(self) -> str:
+       return f"Frequencia de {self.id_disciplina}"
