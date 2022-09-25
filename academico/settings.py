@@ -44,11 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'gestao',
-    'estudante',
-    'endereco',
-    'cursos',
+    'gestao.apps.GestaoConfig',
+    'estudante.apps.EstudanteConfig',
+    'endereco.apps.EnderecoConfig',
+    'cursos.apps.CursosConfig',
+    'cpf_field'
 ]
 
 MIDDLEWARE = [
