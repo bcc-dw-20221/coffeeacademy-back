@@ -1,18 +1,28 @@
 #from time import clock_settime
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator, MaxValueValidator
 """from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from somewhere import handle_uploaded_file
 from django import forms"""
 
+#Min and Max values
+class MinMaxFloat(models.FloatField):
+    def __init__(self, min_value=None, max_value=None, *args, **kwargs):
+        self.min_value, self.max_value = min_value, max_value
+        super(MinMaxFloat, self).__init__(*args, **kwargs)
 
+    def formfield(self, **kwargs):
+        defaults = {'min_value': self.min_value, 'max_value' : self.max_value}
+        defaults.update(kwargs)
+        return super(MinMaxFloat, self).formfield(**defaults)
 
 # Create your models here.
 class Nota(models.Model):
     # disciplina = ForeignKey
 
-    nota_disciplina = models.FloatField(default=0.0, blank=False, null=False)
+    nota_disciplina = MinMaxFloat(min_value=0.0, max_value=10.0)
 
     def __str__(self):
         return f"Nota: Disciplina: {self.nota_disciplina}"
@@ -24,7 +34,8 @@ class Curso(models.Model):
 
     # disciplinas(lista) = ForeignKey
 
-    quantidade_vagas = models.IntegerField(default=0, null=False, blank=False)
+    quantidade_vagas = models.PositiveIntegerField(default=0, null=False, blank=False)
+
 
     def __str__(self) -> str:
         return f"Curso: {self.nome_curso}"
@@ -43,9 +54,9 @@ class Disciplina(models.Model):
 
     """semestre = chave estrangeira"""
 
-    quantidade_vagas = models.IntegerField(default=0, null=False, blank=True)
+    quantidade_vagas = models.PositiveIntegerField(default=0, null=False, blank=True)
 
-    quantidade_creditos = models.IntegerField(
+    quantidade_creditos = models.PositiveIntegerField(
         default=0, null=False, blank=True)
 
     tipo_disciplina_choices = (
