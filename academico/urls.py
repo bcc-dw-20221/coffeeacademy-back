@@ -14,19 +14,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from endereco.api.viewsets import EnderecoViewSet
-#from estudante.api.viewsets import AlunosViewSet
 from rest_framework import routers
-#from estudante.urls import *
 
 
 router = routers.DefaultRouter()
-#router.register(r'endereco', EnderecoViewSet)
-#router.register(r'aluno', AlunosViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path("end/", include("endereco.urls")),
     path("estudantes/", include("estudante.urls")),
+    path("gestao/", include("gestao.urls")),
 ]
