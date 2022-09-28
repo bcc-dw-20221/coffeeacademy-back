@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestao.apps.GestaoConfig',
+    'rest_framework',
     'estudante.apps.EstudanteConfig',
     'endereco.apps.EnderecoConfig',
     'cursos.apps.CursosConfig',

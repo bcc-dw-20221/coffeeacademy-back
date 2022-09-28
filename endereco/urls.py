@@ -1,4 +1,5 @@
 """academico URL Configuration
+
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
 Examples:
@@ -12,21 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from endereco.api.viewsets import EnderecoViewSet
-#from estudante.api.viewsets import AlunosViewSet
-from rest_framework import routers
-#from estudante.urls import *
 
+from django.contrib import admin
+from django.conf.urls import include
+from django.urls import path
+from rest_framework import routers
+from django.conf.urls.static import static
+from endereco.api.viewsets import EnderecoViewSet 
 
 router = routers.DefaultRouter()
-#router.register(r'endereco', EnderecoViewSet)
-#router.register(r'aluno', AlunosViewSet)
+router.register(r'endereco', EnderecoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path("end/", include("endereco.urls")),
-    path("estudantes/", include("estudante.urls")),
 ]
