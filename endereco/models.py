@@ -15,7 +15,7 @@ class Endereco(models.Model):
     max_length=9
     )'''
 
-    '''def __str__(self):
-        return self.cep'''
+    def __str__(self):
+        return f'Rua {self.rua}, nº {self.numero}, complemento {self.complemento}, bairro {self.bairro}, cidade {self.cidade}, cep {self.cep}'
 
 

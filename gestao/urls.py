@@ -17,12 +17,12 @@ from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
 from django.conf.urls.static import static
-from gestao.api.viewsets import ProfessorViewSet, CoordenadorViewSet
+from gestao.api.viewsets import ProfessorViewSet, CoordenadorViewSet, GestorViewSet
 
 router = routers.DefaultRouter()
 router.register(r'professor', ProfessorViewSet)
-router.register(r'coordenador', ProfessorViewSet)
-router.register(r'gestor', ProfessorViewSet)
+router.register(r'coordenador', CoordenadorViewSet)
+router.register(r'gestor', GestorViewSet)
 
 
 urlpatterns = [

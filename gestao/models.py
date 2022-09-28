@@ -1,8 +1,10 @@
+from asyncio.windows_events import NULL
+from email.policy import default
 from django.db import models
 from cpf_field.models import CPFField
 
-#from endereco.models import Endereco
-#from cursos.models import Cursos
+from endereco.models import Endereco
+from cursos.models import Curso
 
 
 # Create your models here.
@@ -40,9 +42,13 @@ class Employee(models.Model):
     estado_civil = models.CharField(max_length=1, choices=estado_civil_choices, blank=True)
     naturalidade = models.CharField(max_length=30, blank=True)
     
-    '''
-    endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
-    '''
+    
+    endereco = models.ForeignKey(Endereco, on_delete=models.DO_NOTHING, null=True, blank=True, unique=False)
+    
+
+    def set_senha(self, senha):
+        self.senha = make_password(senha)
+
 
     def __str__(self) -> str:
         return self.nome()
@@ -54,29 +60,20 @@ class Gestor(Employee):
     
 
 class Coordenador(Employee):
-    '''
-    curso = models.ForeignKey(Cursos)
-    '''
+    curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, null=True, blank=True)
+    
 
     def __str__(self) -> str:
         return f'Coordenador {self.nome}'
     
 
 class Professor(Employee):
-    '''
-    cursos = models.ForeignKey(Cursos)
-    disciplinas = models.ManyToManyField(Cursos)
-    '''
+    curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, null=True, blank=True, unique=False)
+    
+    #disciplinas = models.ManyToManyField(Cursos)
 
     carga_horaria = models.IntegerField(null=True, blank=False)
-
+    
     def __str__(self) -> str:
         return f'Professor {self.nome}'
     
-'''
-class list():
-    lista = []
-
-    def add(self, novo):
-        self.lista.append(novo)
-'''

@@ -19,6 +19,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 
+
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
@@ -26,5 +27,4 @@ urlpatterns = [
     path("estudantes/", include("estudante.urls")),
     path("gestao/", include("gestao.urls")),
     path("cursos/", include("cursos.urls")),
-
 ]
