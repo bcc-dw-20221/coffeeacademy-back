@@ -26,7 +26,7 @@ class Employee(models.Model):
     
     nome = models.CharField(max_length=130, blank=False)
     email = models.EmailField(max_length=130, blank=False)
-    senha = models.CharField(max_length=60, blank=False)
+    password = models.CharField(max_length=160, blank=False)
 
     telefone = models.CharField(max_length=16, blank=False)
     
@@ -37,18 +37,12 @@ class Employee(models.Model):
     ''' RG -> xxxxxxxxxxxxx '''
     rg = models.CharField(max_length=13, blank=True, unique=True)
     
-    data_nascimento = models.DateField(max_length=8, blank=True)
+    data_nascimento = models.DateField(max_length=8, blank=True, null=True)
     sexo = models.CharField(max_length=1, choices=sexo_choices, blank=True)
     estado_civil = models.CharField(max_length=1, choices=estado_civil_choices, blank=True)
     naturalidade = models.CharField(max_length=30, blank=True)
     
-    
     endereco = models.ForeignKey(Endereco, on_delete=models.DO_NOTHING, null=True, blank=True, unique=False)
-    
-
-    def set_senha(self, senha):
-        self.senha = make_password(senha)
-
 
     def __str__(self) -> str:
         return self.nome()

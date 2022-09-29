@@ -16,3 +16,4 @@ class CoordenadorViewSet(viewsets.ModelViewSet):
 class GestorViewSet(viewsets.ModelViewSet):
     queryset = Gestor.objects.all()
     serializer_class = GestorSerializer
+

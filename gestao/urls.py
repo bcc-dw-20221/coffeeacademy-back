@@ -12,6 +12,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
@@ -23,7 +24,6 @@ router = routers.DefaultRouter()
 router.register(r'professor', ProfessorViewSet)
 router.register(r'coordenador', CoordenadorViewSet)
 router.register(r'gestor', GestorViewSet)
-
 
 urlpatterns = [
     path('', include(router.urls)),

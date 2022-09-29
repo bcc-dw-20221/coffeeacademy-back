@@ -48,10 +48,10 @@ class Alunos(models.Model):
     naturalidade = models.CharField(max_length = 20)
 
     email = models.EmailField(max_length=130, blank=False)
-    senha = models.CharField(max_length=60, blank=False)
+    password = models.CharField(max_length=160, blank=False)
 
     def __str__(self):
-        return self.nome
+        return f'Discente {self.nome}'
     
 class Matricula(models.Model):
     '''id_matricula = models.OneToOneField(Alunos, on_delete=models.PROTECTED)
@@ -61,32 +61,26 @@ class Matricula(models.Model):
     usuario_responsavel = models.CharField(max_length = 100, blank = False, unique = False)
 
     def __str__(self) -> str:
-       return f"Matricula do(a) {self.aluno.nome}"
+       return f"Matricula do(a) {self.nome}"
 
 class Pais(models.Model):
-   #id_pais = models.ForeignKey(aluno, blank = False)
+    #pais_id = models.ForeignKey(Alunos, on_delete=models.CASCADE, blank = False, null=True)
     nome_pai = models.CharField(max_length = 100, blank = False, unique = False)
     nome_mae = models.CharField(max_length = 100, blank = False, unique = False)
     email = models.EmailField()
-    senha = models.CharField(max_length = 50, blank = False, unique = False) #Verificar: Documentação Django para Password
+    password = models.CharField(max_length = 160, blank = False) #Verificar: Documentação Django para Password
 
     def __str__(self) -> str:
-        return f"Pais do(a) {self.aluno.nome}"
+        return f"Pai {self.nome_pai}, Mae {self.nome_mae}"
 
 class Egresso(models.Model):
     cpf = CPFField('cpf')#.ForeignKey(Aluno, blank = False, unique = True)
     nome_egresso = models.CharField(max_length = 100, blank = False, unique = False)
     email = models.EmailField()
-    senha = models.CharField(max_length = 50, blank = False, unique = False) #Verificar: Documentação Django para Password
+    password = models.CharField(max_length = 160, blank = False) #Verificar: Documentação Django para Password
     #curso = models.ForeignKey(Cursos, blank = False)
     
     def __str__(self) -> str:
-        return f"Nome do Egresso {self.aluno.nome}"
-
-
-
-
-
-
+        return f"Nome do Egresso {self.nome_egresso}"
 
 
