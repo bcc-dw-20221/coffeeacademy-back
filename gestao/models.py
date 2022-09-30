@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from email.policy import default
 from django.db import models
 from cpf_field.models import CPFField
@@ -17,11 +16,11 @@ class Employee(models.Model):
         ('W', 'Mulher Trans')
     )
     estado_civil_choices = (
-        ('S', 'Solteiro'), 
-        ('C', 'Casado'), 
-        ('V', 'Viúvo'),
-        ('H', 'Separado'),
-        ('D', 'Divorciado'),
+        ('S', 'Solteiro(a)'), 
+        ('C', 'Casado(a)'), 
+        ('V', 'Viúvo(a)'),
+        ('H', 'Separado(a)'),
+        ('D', 'Divorciado(a)'),
         ('U', 'União Estável')
     )
     

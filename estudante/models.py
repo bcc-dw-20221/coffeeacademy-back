@@ -14,11 +14,11 @@ class Alunos(models.Model):
         ('W', 'Mulher Trans')
     )
     estado_civil_choices = (
-        ('S', 'Solteiro'), 
-        ('C', 'Casado'), 
-        ('V', 'Viúvo'),
-        ('H', 'Separado'),
-        ('D', 'Divorciado'),
+        ('S', 'Solteiro(a)'), 
+        ('C', 'Casado(a)'), 
+        ('V', 'Viúvo(a)'),
+        ('H', 'Separado(a)'),
+        ('D', 'Divorciado(a)'),
         ('U', 'União Estável')
     )
 

@@ -27,5 +27,5 @@ router.register(r'frequencias', FrequenciaViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
 ]

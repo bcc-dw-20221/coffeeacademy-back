@@ -1,4 +1,5 @@
 #from time import clock_settime
+from email.policy import default
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -102,13 +103,15 @@ class Disciplina(models.Model):
 
 class Frequencia(models.Model):
      
-    id_disciplina = models.ForeignKey(
+    """id_disciplina = models.ForeignKey(
          get_user_model(),
          max_length = 14,
          primary_key = True,
          on_delete = models.CASCADE
          #related_name = "matricula",
-    )
+    )"""
+
+    #adicionar nome da disciplina
 
     data_aula = models.DateField()
 

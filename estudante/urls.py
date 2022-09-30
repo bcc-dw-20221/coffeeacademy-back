@@ -27,5 +27,5 @@ router.register(r'egresso', EgressoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
 ]
