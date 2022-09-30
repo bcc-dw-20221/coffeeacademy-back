@@ -28,7 +28,7 @@ def get_professor(request):
 
 
 @require_http_methods(["GET"])
-def get_professor(request, professor_id):
+def get_professor_id(request, professor_id):
     """Retorna um professor."""
     professor = Professor.objects.filter(pk=professor_id)
 
@@ -58,7 +58,7 @@ def post_professor(request):
     return HttpResponse("professor criado com sucesso")
 
 
-@require_http_methods(["DELETE"])
+@require_http_methods(["GET"])
 def delete_professor(request, professor_id):
     """Deleta um professor"""
     professor = Professor.objects.get(pk=professor_id)
@@ -81,7 +81,7 @@ def get_coordenador(request):
 
 
 @require_http_methods(["GET"])
-def get_coordenador(request, coordenador_id):
+def get_coordenador_id(request, coordenador_id):
     """Retorna um coordenador."""
     coordenador = Coordenador.objects.filter(pk=coordenador_id)
 
@@ -130,7 +130,7 @@ def get_gestor(request):
 
 
 @require_http_methods(["GET"])
-def get_gestor(request, gestor_id):
+def get_gestor_id(request, gestor_id):
     """Retorna um gestor."""
     gestor = Gestor.objects.filter(pk=gestor_id)
 
@@ -164,4 +164,3 @@ def delete_gestor(request, gestor_id):
     gestor.delete()
 
     return HttpResponse("Deletado com sucesso.")
-

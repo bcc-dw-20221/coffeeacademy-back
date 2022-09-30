@@ -1,22 +1,9 @@
-"""academico URL Configuration
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
 from django.conf.urls.static import static
+from estudante import views
 from estudante.api.viewsets import AlunosViewSet, MatriculaViewSet,  PaisViewSet, EgressoViewSet
 
 router = routers.DefaultRouter()
@@ -26,6 +13,12 @@ router.register(r'pais', PaisViewSet)
 router.register(r'egresso', EgressoViewSet)
 
 urlpatterns = [
+    path('', views.get_alunos, name="get_alunos"),
+    path('add/', views.post_alunos, name="post_alunos"),
+    path("get/<matricula>/", views.get_alunos_matricula, name="get_alunos_matricula"),
+    path(
+        "remove/<matricula>/", views.delete_aluno, name="delete_aluno"
+    ),
     path('', include(router.urls)),
-    # path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
 ]
