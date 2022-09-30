@@ -121,4 +121,4 @@ class Frequencia(models.Model):
     REQUIRED_FIELDS = ['titulo_dias_aula'] 
 
     def __str__(self) -> str:
-       return f"Frequencia de {self.id_disciplina}"
+       return f"Frequencia de {self.titulo_dias_aula}"

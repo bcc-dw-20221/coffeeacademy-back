@@ -31,7 +31,7 @@ class Alunos(models.Model):
     cpf = CPFField('cpf')
 
     ''' RG -> xxxxxxxxxxxxx '''
-    rg = models.CharField(max_length = 8, blank=False, unique=True)
+    rg = models.CharField(max_length = 15, blank=False, unique=True)
 
     '''
     endereco = models.OneToOneField(Endereco, on_delete=models.DO_NOTHING)
