@@ -2,6 +2,7 @@ from asyncio.windows_events import NULL
 from email.policy import default
 from django.db import models
 from cpf_field.models import CPFField
+from django.contrib.auth.hashers import make_password
 
 from endereco.models import Endereco
 from cursos.models import Curso
@@ -47,6 +48,8 @@ class Employee(models.Model):
     def __str__(self) -> str:
         return self.nome()
 
+    def set_password(self, password):
+        self.password = make_password(password)
 
 class Gestor(Employee):
     def __str__(self) -> str:
