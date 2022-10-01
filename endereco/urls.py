@@ -14,17 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from unicodedata import name
 from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
 from django.conf.urls.static import static
 from endereco.api.viewsets import EnderecoViewSet 
+from endereco import views
 
 router = routers.DefaultRouter()
 router.register(r'endereco', EnderecoViewSet)
 
 urlpatterns = [
+    path('endereco2/', views.get_enderecos, name="get_enderecos"),
+    path('endereco/add/', views.post_endereco, name="post_endereco"),
+    path("endereco/get/<endereco_id>/", views.get_endereco_id, name="get_endereco_id"),
+    path(
+        "endereco/remove/<endereco_id>/", views.delete_endereco, name="delete_endereco"),
     path('', include(router.urls)),
     # path('admin/', admin.site.urls),
 ]

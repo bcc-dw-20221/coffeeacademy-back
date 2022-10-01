@@ -15,15 +15,15 @@ def get_enderecos(request):
 
     return HttpResponse(resp_json, content_type="application/json")
 
-"""@require_http_methods(["GET"])
-def get_endereco(request, endereco_id):
-    Retornando apenas um endereco.
+@require_http_methods(["GET"])
+def get_endereco_id(request, endereco_id):
+    # Retornando apenas um endereco.
     endereco = Endereco.objects.filter(pk=endereco_id)
 
     endereco_json = serializers.serialize("json", endereco)
 
     return HttpResponse(endereco_json, content_type="application/json")
-"""
+
 
 @require_http_methods(["POST"])
 def post_endereco(request):
@@ -38,12 +38,11 @@ def post_endereco(request):
 
     novo_endereco.save()
     
-    return HttpResponse("Endeço cadastrado!")
+    return HttpResponse("Endereço cadastrado!")
 
-"""@require_http_methods(["DELETE"])
+@require_http_methods(["GET"])
 def delete_endereco(request, endereco_id):
-    Removendo um endereco
+    # Removendo um endereco
     endereco = Endereco.objects.get(endereco_id)
     endereco.delete()
     return HttpResponse("Endereço excluído!")
-"""
