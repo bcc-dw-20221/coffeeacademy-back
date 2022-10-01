@@ -76,7 +76,8 @@ class Pais(models.Model):
         return f"Pai {self.nome_pai}, Mae {self.nome_mae}"
 
 class Egresso(models.Model):
-    cpf = CPFField('cpf')#.ForeignKey(Aluno, blank = False, unique = True)
+    id_matricula_egresso = models.OneToOneField(Alunos, on_delete=models.CASCADE, related_name="egressos")
+    #cpf = CPFField('cpf')
     nome_egresso = models.CharField(max_length = 100, blank = False, unique = False)
     email = models.EmailField()
     password = models.CharField(max_length = 160, blank = False) #Verificar: Documentação Django para Password

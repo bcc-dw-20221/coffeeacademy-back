@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 from django.views.decorators.http import require_http_methods
 
-from estudante.models import Alunos, Matricula, Pais
+from estudante.models import Alunos, Matricula, Pais, Egresso
 
 
 """ views do Aluno"""
@@ -59,6 +59,7 @@ def delete_aluno(request, matricula):
     return HttpResponse("Aluno Deletado com sucesso.")
 
 
+
 """ views da Matricula"""
 require_http_methods(["GET"])
 def get_matricula(request):
@@ -97,10 +98,12 @@ def delete_matricula(request, id_matricula):
 
     return HttpResponse("Matricula Deletado com sucesso.")
 
-    """ views dos Pais"""
+
+
+""" views dos Pais"""
 require_http_methods(["GET"])
 def get_pais(request):
-    """Retorna todas as matriculas."""
+    """Retorna todos os matriculas."""
     pais = Pais.objects.all()
 
     resp_json = serializers.serialize("json", pais)
@@ -109,7 +112,7 @@ def get_pais(request):
 
 @require_http_methods(["GET"])
 def get_pais_id(request, pais_id):
-    """Retorna todas as matriculas."""
+    """Retorna todos os matriculas."""
     pais = Pais.objects.filter(pais_id=pais_id)
 
     resp_json = serializers.serialize("json", pais)
@@ -118,7 +121,7 @@ def get_pais_id(request, pais_id):
 
 @require_http_methods(["POST"])
 def post_pais(request):
-    """Adiciona um matriculas."""
+    """Adiciona os pais."""
     novo = Pais()
     novo.pais_id = get_user_model().objects.get(pk=request.POST["pais_id"])
     novo.nome_pai = request.POST["nome_pai"]
@@ -130,10 +133,50 @@ def post_pais(request):
 
 @require_http_methods(["DELETE"])
 def delete_pais(request, pais_id):
-    """Deleta um matriculas."""
+    """Deleta os pais."""
     post = Pais.objects.get(pais_id=pais_id)
     post.delete()
 
     return HttpResponse("Pais Deletados com sucesso.")
+
+
+
+""" views dos Egressos"""
+require_http_methods(["GET"])
+def get_egresso(request):
+    """Retorna todos os egressos."""
+    egresso = Egresso.objects.all()
+
+    resp_json = serializers.serialize("json", egresso)
+
+    return HttpResponse(resp_json, content_type="application/json")
+
+@require_http_methods(["GET"])
+def get_egresso_id(request, id_matricula_egresso):
+    """Retorna todos os egressos."""
+    egresso = Egresso.objects.filter(id_matricula_egresso=id_matricula_egresso)
+
+    resp_json = serializers.serialize("json", egresso)
+
+    return HttpResponse(resp_json, content_type="application/json")
+
+@require_http_methods(["POST"])
+def post_egresso(request):
+    """Adiciono os Egressos."""
+    novo = Egresso()
+    novo.id_matricula_egresso = get_user_model().objects.get(pk=request.POST["id_matricula_egresso"])
+    novo.nome_egresso = request.POST["nome_egresso"]
+    novo.email = request.POST["email"]
+    novo.password = novo.set_password(request.POST["password"])
+    novo.save()
+    return HttpResponse("Egresso criado com Sucesso!")
+
+@require_http_methods(["DELETE"])
+def delete_egresso(request, id_matricula_egresso):
+    """Deleta os Egressos."""
+    post = Egresso.objects.get(id_matricula_egresso=id_matricula_egresso)
+    post.delete()
+
+    return HttpResponse("Egresso Deletado com sucesso.")
 
 
