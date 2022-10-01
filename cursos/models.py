@@ -65,6 +65,8 @@ class Disciplina(models.Model):
         ('OP', 'Optativa'),
     )
 
+    tipo_disciplina = models.CharField(max_length=150, choices=tipo_disciplina_choices, blank=True)
+
     # dia_aula = data formato dia
 
     # hora_aula = data formato hh:mm
@@ -110,8 +112,6 @@ class Frequencia(models.Model):
          on_delete = models.CASCADE
          #related_name = "matricula",
     )"""
-
-    #adicionar nome da disciplina
 
     data_aula = models.DateField()
 
