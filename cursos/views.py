@@ -30,7 +30,7 @@ def post_curso(request):
     """Adiciona um curso."""
     novo_curso = Curso()
     novo_curso.nome_curso = request.POST["nome_curso"]
-    # lista de disciplinas -> implementar
+    # novo_curso.disciplinas = request.POST["disciplinas"]
     novo_curso.quantidade_vagas = request.POST["quantidade_vagas"]
     novo_curso.save()
     return HttpResponse("Curso adicionado!")
@@ -68,7 +68,7 @@ def get_nota(request, nota_id):
 def post_nota(request):
     """Adiciona uma nota."""
     nova_nota = Nota()
-    # disciplina -> implementar
+    # nova_nota.disciplina = request.POST["disciplina"]
     nova_nota.nota_disciplina = request.POST["nota_disciplina"]  
     nova_nota.save()
     return HttpResponse("Nota adicionada!")
@@ -106,12 +106,11 @@ def get_disciplina(request, disciplina_id):
 def post_disciplina(request):
     """Adiciona uma disciplina."""
     nova_disciplina = Disciplina()
-    # id_disciplina -> implementar
     nova_disciplina.nome_disciplina= request.POST["nome_disciplina"] 
-    # alunos(lista) -> implementar
-    # curso -> implementar
-    # professor -> implementar
-    # semestre -> implementar
+    # nova_disciplina.alunos = request.POST["alunos"]
+    # nova_disciplina.curso= request.POST["curso"]
+    # nova_disciplina.professor = request.POST["professor"]
+    # nova_disciplina.semestre = request.POST["semestre"]
     nova_disciplina.quantidade_vagas = request.POST["quantidade_vagas"]
     nova_disciplina.quantidade_creditos = request.POST["quantidade_creditos"]
     nova_disciplina.tipo_disciplina = request.POST["tipo_disciplina"]
@@ -119,7 +118,7 @@ def post_disciplina(request):
     # hora_aula -> implementar
     nova_disciplina.carga_horaria = request.POST["carga_horaria"]
     nova_disciplina.conteudo_ministrado = request.POST["conteudo_ministrado"]
-    # material_disciplina -> implementar
+    # nova_disciplina.material_disciplina = request.POST["material_disciplina"]
     nova_disciplina.save()
     return HttpResponse("Disciplina adicionada!")
 
@@ -155,7 +154,7 @@ def get_frequencia(request, frequencia_id):
 def post_frequencia(request):
     """Adiciona uma frequencia."""
     nova_frequencia = Frequencia()
-    # id_disciplina -> implementar
+    # nova_frequencia.id_disciplina = request.POST["id_disciplina"]
     nova_frequencia.data_aula= request.POST["data_aula"] 
     nova_frequencia.titulo_dias_aula - request.POST["titulo_dias_aula"]
     nova_frequencia.save()
