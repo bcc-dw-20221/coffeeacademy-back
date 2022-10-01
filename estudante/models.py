@@ -54,17 +54,19 @@ class Alunos(models.Model):
         return f'Discente {self.nome}'
     
 class Matricula(models.Model):
-    '''id_matricula = models.OneToOneField(Alunos, on_delete=models.PROTECTED)
+    id_matricula = models.OneToOneField(Alunos, on_delete=models.CASCADE, related_name="discente")
+
+    '''
     curso = models.ForeignKey(Cursos, blank = False)
     '''
     data_matricula = models.DateTimeField()
     usuario_responsavel = models.CharField(max_length = 100, blank = False, unique = False)
 
     def __str__(self) -> str:
-       return f"Matricula do(a) {self.nome}"
+       return f"Matricula do(a) {self.id_matricula}"
 
 class Pais(models.Model):
-    #pais_id = models.ForeignKey(Alunos, on_delete=models.CASCADE, blank = False, null=True)
+    pais_id = models.ForeignKey(Alunos, on_delete=models.CASCADE, blank = False, null=True, related_name="pai")
     nome_pai = models.CharField(max_length = 100, blank = False, unique = False)
     nome_mae = models.CharField(max_length = 100, blank = False, unique = False)
     email = models.EmailField()
