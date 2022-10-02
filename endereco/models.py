@@ -3,8 +3,8 @@ from pyexpat import model
 from django.db import models
 
 class Endereco(models.Model):
-    rua = models.CharField(max_length=150, null=False)
-    numero = models.CharField(max_length=20, null=False)
+    rua = models.CharField(max_length=150)
+    numero = models.CharField(max_length=20)
     complemento = models.CharField(max_length=150)
     bairro = models.CharField(max_length=150)
     cidade = models.CharField(max_length=150)

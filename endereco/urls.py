@@ -28,10 +28,9 @@ router.register(r'endereco', EnderecoViewSet)
 
 urlpatterns = [
     path('endereco2/', views.get_enderecos, name="get_enderecos"),
-    path('endereco/add/', views.post_endereco, name="post_endereco"),
-    path("endereco/get/<endereco_id>/", views.get_endereco_id, name="get_endereco_id"),
-    path(
-        "endereco/remove/<endereco_id>/", views.delete_endereco, name="delete_endereco"),
+    path('add/', views.post_endereco, name="post_endereco"),
+    path("get/<endereco_id>/", views.get_endereco_id, name="get_endereco_id"),
+    path("remove/<endereco_id>/", views.delete_endereco, name="delete_endereco"),
     path('', include(router.urls)),
     # path('admin/', admin.site.urls),
 ]
