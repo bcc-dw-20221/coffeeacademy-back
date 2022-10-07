@@ -9,4 +9,4 @@ CASO APRESENTE ERRO EXECUTAR EM LINHA DE COMANDO:
 2- del .\db.sqlite3
 3- python manage.py makemigrations
 4- python manage.py migrate
-4- python manage.py runserver
+5- python manage.py runserver
