@@ -4,7 +4,7 @@ from django.core import serializers
 from django.views.decorators.http import require_http_methods
 
 from cursos.models import Curso, Nota, Disciplina, Frequencia
-z
+
 # View da Classe CURSO
 @require_http_methods(["GET"])
 def get_cursos(request):
@@ -75,7 +75,7 @@ def post_nota(request):
 
 
 @require_http_methods(["DELETE"])
-def delete_curso(request, nota_id):
+def delete_nota(request, nota_id):
     """Deletar um nota"""
     nota = Nota.objects.get(pk=nota_id)
     nota.delete()
@@ -167,7 +167,4 @@ def delete_frequencia(request, frequencia_id):
     frequencia.delete()
 
     return HttpResponse("Deletado com sucesso.")
-
-
-
 

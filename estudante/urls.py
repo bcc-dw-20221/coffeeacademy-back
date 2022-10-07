@@ -7,15 +7,15 @@ from estudante import views
 from estudante.api.viewsets import AlunosViewSet, MatriculaViewSet,  PaisViewSet, EgressoViewSet
 
 router = routers.DefaultRouter()
-router.register(r'alunos', AlunosViewSet)
-router.register(r'matricula', MatriculaViewSet)
-router.register(r'pais', PaisViewSet)
-router.register(r'egresso', EgressoViewSet)
+router.register(r'alunos/main', AlunosViewSet)
+router.register(r'matricula/main', MatriculaViewSet)
+router.register(r'pais/main', PaisViewSet)
+router.register(r'egresso/main', EgressoViewSet)
 
 urlpatterns = [
 
     ### PATH ESTUDANTES ### 
-    path('alunos2/', views.get_alunos, name="get_alunos"),
+    path('alunos/', views.get_alunos, name="get_alunos"),
     path('alunos/add/', views.post_alunos, name="post_alunos"),
     path("alunos/get/<matricula>/", views.get_alunos_matricula, name="get_alunos_matricula"),
     path(
@@ -23,7 +23,7 @@ urlpatterns = [
     ),
 
     ### PATH MATRICULA ###
-    path('matricula2/', views.get_matricula, name="get_matricula"),
+    path('matricula/', views.get_matricula, name="get_matricula"),
     path('matricula/add/', views.post_matricula, name="post_matricula"),
     path("matricula/get/<id_matricula>/", views.get_matricula_id, name="get_matricula_id"),
     path(
@@ -31,7 +31,7 @@ urlpatterns = [
     ),
 
     ### PATH PAIS ###
-    path('pais2/', views.get_pais, name="get_pais"),
+    path('pais/', views.get_pais, name="get_pais"),
     path('pais/add/', views.post_pais, name="post_pais"),
     path("pais/get/<pais_id>/", views.get_pais_id, name="get_pais_id"),
     path(
@@ -39,7 +39,7 @@ urlpatterns = [
     ),
 
     ### PATH EGRESSO ###
-    path('egresso2/', views.get_egresso, name="get_egresso"),
+    path('egresso/', views.get_egresso, name="get_egresso"),
     path('egresso/add/', views.post_egresso, name="post_egresso"),
     path("egresso/get/<id_matricula_egresso>/", views.get_egresso_id, name="id_matricula_egresso"),
     path(
@@ -47,5 +47,4 @@ urlpatterns = [
     ),
 
     path('', include(router.urls)),
-    #path('admin/', admin.site.urls),
 ]

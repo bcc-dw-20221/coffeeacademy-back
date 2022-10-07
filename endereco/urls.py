@@ -24,13 +24,12 @@ from endereco.api.viewsets import EnderecoViewSet
 from endereco import views
 
 router = routers.DefaultRouter()
-router.register(r'endereco', EnderecoViewSet)
+router.register(r'endereco/main', EnderecoViewSet)
 
 urlpatterns = [
-    path('endereco2/', views.get_enderecos, name="get_enderecos"),
+    path('endereco/', views.get_enderecos, name="get_enderecos"),
     path('add/', views.post_endereco, name="post_endereco"),
     path("get/<endereco_id>/", views.get_endereco_id, name="get_endereco_id"),
     path("remove/<endereco_id>/", views.delete_endereco, name="delete_endereco"),
     path('', include(router.urls)),
-    # path('admin/', admin.site.urls),
 ]

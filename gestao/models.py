@@ -49,6 +49,9 @@ class Employee(models.Model):
 
     def set_password(self, password):
         self.password = make_password(password)
+    
+    class Meta:
+        abstract = True
 
 class Gestor(Employee):
     def __str__(self) -> str:
