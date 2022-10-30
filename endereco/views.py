@@ -43,6 +43,6 @@ def post_endereco(request):
 @require_http_methods(["GET"])
 def delete_endereco(request, endereco_id):
     # Removendo um endereco
-    endereco = Endereco.objects.get(endereco_id)
+    endereco = Endereco.objects.get(pk=endereco_id)
     endereco.delete()
     return HttpResponse("Endereço excluído!")
