@@ -59,7 +59,7 @@ def get_nota(request, nota_id):
     """Retorna apenas uma nota."""
     nota = Nota.objects.filter(pk=nota_id)
 
-    nota_json = serializers.serialize("json", nota)
+    notas_json = serializers.serialize("json", nota)
 
     return HttpResponse(notas_json, content_type="application/json")
 
