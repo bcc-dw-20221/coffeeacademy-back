@@ -21,7 +21,7 @@ def get_alunos(request):
 
 @require_http_methods(["GET"])
 def get_alunos_matricula(request, matricula):
-    """Retorna todas as alunos."""
+    """Retorna um aluno."""
     alunos = Alunos.objects.filter(pk=matricula)
 
     resp_json = serializers.serialize("json", alunos)
@@ -72,7 +72,7 @@ def get_matricula(request):
 
 @require_http_methods(["GET"])
 def get_matricula_id(request, id_matricula):
-    """Retorna todas as matriculas."""
+    """Retorna uma matricula."""
     matricula = Matricula.objects.filter(id_matricula=id_matricula)
 
     resp_json = serializers.serialize("json", matricula)
@@ -81,7 +81,7 @@ def get_matricula_id(request, id_matricula):
 
 @require_http_methods(["POST"])
 def post_matricula(request):
-    """Adiciona um matriculas."""
+    """Adiciona uma matricula."""
     novo = Matricula()
     novo.id_matricula = get_user_model().objects.get(pk=request.POST["id_matricula"])
     novo.data_matricula = request.POST["data_matricula"]
@@ -92,7 +92,7 @@ def post_matricula(request):
 
 @require_http_methods(["DELETE"])
 def delete_matricula(request, id_matricula):
-    """Deleta um matriculas."""
+    """Deleta uma matricula."""
     post = Matricula.objects.get(id_matricula=id_matricula)
     post.delete()
 
@@ -103,7 +103,7 @@ def delete_matricula(request, id_matricula):
 """ views dos Pais"""
 require_http_methods(["GET"])
 def get_pais(request):
-    """Retorna todos os matriculas."""
+    """Retorna todos os pais."""
     pais = Pais.objects.all()
 
     resp_json = serializers.serialize("json", pais)
@@ -112,7 +112,7 @@ def get_pais(request):
 
 @require_http_methods(["GET"])
 def get_pais_id(request, pais_id):
-    """Retorna todos os matriculas."""
+    """Retorna um par de pais."""
     pais = Pais.objects.filter(pais_id=pais_id)
 
     resp_json = serializers.serialize("json", pais)
@@ -121,7 +121,7 @@ def get_pais_id(request, pais_id):
 
 @require_http_methods(["POST"])
 def post_pais(request):
-    """Adiciona os pais."""
+    """Adiciona um par de pais."""
     novo = Pais()
     novo.pais_id = get_user_model().objects.get(pk=request.POST["pais_id"])
     novo.nome_pai = request.POST["nome_pai"]
@@ -133,7 +133,7 @@ def post_pais(request):
 
 @require_http_methods(["DELETE"])
 def delete_pais(request, pais_id):
-    """Deleta os pais."""
+    """Deleta um par de pais."""
     post = Pais.objects.get(pais_id=pais_id)
     post.delete()
 
@@ -153,7 +153,7 @@ def get_egresso(request):
 
 @require_http_methods(["GET"])
 def get_egresso_id(request, id_matricula_egresso):
-    """Retorna todos os egressos."""
+    """Retorna um egresso."""
     egresso = Egresso.objects.filter(id_matricula_egresso=id_matricula_egresso)
 
     resp_json = serializers.serialize("json", egresso)
@@ -162,7 +162,7 @@ def get_egresso_id(request, id_matricula_egresso):
 
 @require_http_methods(["POST"])
 def post_egresso(request):
-    """Adiciono os Egressos."""
+    """Adiciona um Egresso."""
     novo = Egresso()
     novo.id_matricula_egresso = get_user_model().objects.get(pk=request.POST["id_matricula_egresso"])
     novo.nome_egresso = request.POST["nome_egresso"]
@@ -173,7 +173,7 @@ def post_egresso(request):
 
 @require_http_methods(["DELETE"])
 def delete_egresso(request, id_matricula_egresso):
-    """Deleta os Egressos."""
+    """Deleta um Egresso."""
     post = Egresso.objects.get(id_matricula_egresso=id_matricula_egresso)
     post.delete()
 
