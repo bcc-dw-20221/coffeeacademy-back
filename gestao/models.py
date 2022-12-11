@@ -1,7 +1,8 @@
 from email.policy import default
 from django.db import models
 from cpf_field.models import CPFField
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import User
 
 from endereco.models import Endereco
 from cursos.models import Curso
@@ -24,7 +25,8 @@ class Employee(models.Model):
         ('U', 'União Estável')
     )
     
-    nome = models.CharField(max_length=130, blank=False)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    nome = models.CharField(max_length=130, blank=False, unique=True)
     email = models.EmailField(max_length=130, blank=False)
     password = models.CharField(max_length=160, blank=False)
 
@@ -50,6 +52,9 @@ class Employee(models.Model):
     def set_password(self, password):
         self.password = make_password(password)
     
+    def check_password_user(self, password):
+        return check_password(password, self.password)
+
     class Meta:
         abstract = True
 
@@ -71,8 +76,9 @@ class Professor(Employee):
     
     #disciplinas = models.ManyToManyField(Cursos)
 
-    carga_horaria = models.IntegerField(null=True, blank=False)
+    carga_horaria = models.IntegerField(null=True, blank=True)
     
     def __str__(self) -> str:
         return f'Professor {self.nome}'
+    
     

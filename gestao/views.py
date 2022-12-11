@@ -7,16 +7,67 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.core import serializers
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.hashers import check_password
 
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required, permission_required
 
 from gestao.models import Professor, Coordenador, Gestor
+from django.core.exceptions import ObjectDoesNotExist
 
+from django.contrib.auth.models import Permission
 
 '''
 views Professor
 '''
+@require_http_methods(["GET","POST"])
+def login_professor(request):
+    ''' Login no sistema '''
+    if request.method == 'GET':
+        return render(request, template_name='login.html')
+    elif request.method == 'POST':
+        try:
+            user = Professor.objects.filter(nome=request.POST.get('nome')).first()
+            if user and user.check_password_user(request.POST.get('password')):
+                if user.user is None:
+                    new = User.objects.create_user(
+                        username='Professor ' + user.nome, 
+                        email=user.email, 
+                        password=user.password
+                        )
+                    new.first_name= 'Professor', 
+                    new.last_name=user.nome
+                    new.save()
+                    user.user = new
+                    user.save()
+                login(request=request ,user=user.user)
+                return HttpResponse('logado S2')
+            else:
+                return HttpResponse('erro na senha')
+
+        except ObjectDoesNotExist:
+            return HttpResponse('erro de login ou senha')
+
+
+@require_http_methods(["GET"])
+def logout_professor(request):
+    ''' Logout no sistema '''
+    try:
+        logout(request)
+        return HttpResponse('Logout realizado com sucesso')
+    except:
+        return HttpResponse('erro no logout')
+
+
+@require_http_methods(["GET"])
+#@login_required(login_url='/gestao/professor/login/')
+#@permission_required('gestao|professor|Can view professor', login_url='/gestao/professor/login/')
+def test_professor(request):
+    return HttpResponse('Você está logado corretamente')
+
+
 @require_http_methods(["GET"])
 def get_professor(request):
     """Retorna todos os professores."""
@@ -70,6 +121,51 @@ def delete_professor(request, professor_id):
 '''
 views Coordenador
 '''
+@require_http_methods(["GET","POST"])
+def login_coordenador(request):
+    ''' Login no sistema '''
+    if request.method == 'GET':
+        return render(request, template_name='login.html')
+    elif request.method == 'POST':
+        try:
+            user = Coordenador.objects.filter(nome=request.POST.get('nome')).first()
+            if user.check_password_user(request.POST.get('password')):
+                if user.user is None:
+                    new = User.objects.create_user(
+                        username='Coordenador ' + user.nome, 
+                        email=user.email, 
+                        password=user.password
+                        )
+                    new.first_name= 'Coordenador', 
+                    new.last_name=user.nome
+                    new.save()
+                    user.user = new
+                    user.save()
+                login(request=request ,user=user.user)
+                return HttpResponse('logado S2')
+            else:
+                return HttpResponse('erro na senha')
+
+        except ObjectDoesNotExist:
+            return HttpResponse('erro de login ou senha')
+
+
+@require_http_methods(["GET"])
+def logout_coordenador(request):
+    ''' Logout no sistema '''
+    try:
+        logout(request)
+        return HttpResponse('Logout realizado com sucesso')
+    except:
+        return HttpResponse('erro no logout')
+
+
+@require_http_methods(["GET"])
+@login_required(login_url='/gestao/coordenador/login/')
+def test_coordenador(request):
+    return HttpResponse('Você está logado corretamente')
+
+
 @require_http_methods(["GET"])
 def get_coordenador(request):
     """Retorna todos os coordenadores."""
@@ -119,6 +215,53 @@ def delete_coordenador(request, coordenador_id):
 '''
 views Gestor
 '''
+@require_http_methods(["GET","POST"])
+def login_gestor(request):
+    ''' Login no sistema '''
+    if request.method == 'GET':
+        return render(request, template_name='login.html')
+    elif request.method == 'POST':
+        try:
+            user = Gestor.objects.filter(nome=request.POST.get('nome')).first()
+            if user and user.check_password_user(request.POST.get('password')):
+                if user.user is None:
+                    new = User.objects.create_user(
+                        username='Gestor ' + user.nome, 
+                        email=user.email, 
+                        password=user.password
+                        )
+                    new.first_name= 'Gestor', 
+                    new.last_name=user.nome
+                    new.save()
+                    user.user = new
+                    user.save()
+                login(request=request ,user=user.user)
+                return HttpResponse('logado S2')
+            else:
+                return HttpResponse('erro na senha')
+
+        except ObjectDoesNotExist:
+            return HttpResponse('erro de login ou senha')
+
+
+@require_http_methods(["GET"])
+@login_required(login_url='/gestao/gestor/login/')
+def logout_gestor(request):
+    ''' Logout no sistema '''
+    try:
+        logout(request)
+        return HttpResponse('Logout realizado com sucesso')
+    except:
+        return HttpResponse('erro no logout')
+
+
+@require_http_methods(["GET"])
+#@login_required(login_url='/gestao/gestor/login/')
+@permission_required('Gestor', login_url='/gestao/gestor/login/')
+def test_gestor(request):
+    return HttpResponse('Você está logado corretamente')
+
+
 @require_http_methods(["GET"])
 def get_gestor(request):
     """Retorna todos os gestores."""
