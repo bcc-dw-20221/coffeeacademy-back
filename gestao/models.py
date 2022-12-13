@@ -25,7 +25,7 @@ class Employee(models.Model):
         ('U', 'União Estável')
     )
     
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     nome = models.CharField(max_length=130, blank=False, unique=True)
     email = models.EmailField(max_length=130, blank=False)
     password = models.CharField(max_length=160, blank=False)
@@ -62,6 +62,9 @@ class Gestor(Employee):
     def __str__(self) -> str:
         return f'Gestor {self.nome}'
     
+    class Meta:
+        permissions = (("views_gestor", "pode ver views do grupo gestor"),)
+
 
 class Coordenador(Employee):
     curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING, null=True, blank=True)
@@ -69,6 +72,9 @@ class Coordenador(Employee):
 
     def __str__(self) -> str:
         return f'Coordenador {self.nome}'
+    
+    class Meta:
+        permissions = (("views_coordenador", "pode ver views do grupo coordenador"),)
     
 
 class Professor(Employee):
@@ -81,4 +87,6 @@ class Professor(Employee):
     def __str__(self) -> str:
         return f'Professor {self.nome}'
     
+    class Meta:
+        permissions = (("views_professor", "pode ver views do grupo professor"),)
     

@@ -2,14 +2,68 @@ from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.core import serializers
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login, logout
 
 from django.views.decorators.http import require_http_methods
 
 from estudante.models import Alunos, Matricula, Pais, Egresso
 
+from django.contrib.auth.models import User, Permission
+from django.contrib.auth.decorators import permission_required
+
+from django.core.exceptions import ObjectDoesNotExist
 
 """ views do Aluno"""
+@require_http_methods(["GET","POST"])
+def login_alunos(request):
+    ''' Login no sistema '''
+    if request.method == 'GET':
+        return render(request, template_name='login.html')
+    elif request.method == 'POST':
+        try:
+            user = Alunos.objects.filter(nome=request.POST.get('nome')).first()
+            if user and user.check_password_user(request.POST.get('password')):
+                if user.user is None:
+                    new = User.objects.create_user(
+                        username='Alunos ' + user.nome, 
+                        email=user.email, 
+                        password=user.password
+                        )
+                    new.first_name= 'Alunos', 
+                    new.last_name=user.nome
+                    perm = Permission.objects.get(codename='views_alunos')
+                    new.user_permissions.add(perm)
+                    new.save()
+                    user.user = new
+                    user.save()
+                login(request=request ,user=user.user)
+                return HttpResponse('logado S2')
+            else:
+                return HttpResponse('erro na senha')
+
+        except ObjectDoesNotExist:
+            return HttpResponse('erro de login ou senha')
+
+
+@require_http_methods(["GET"])
+#@login_required(login_url='/estudantes/alunos/login/')
+@permission_required(perm='estudante.views_alunos', login_url='/estudantes/alunos/login/')
+def logout_alunos(request):
+    ''' Logout no sistema '''
+    try:
+        logout(request)
+        return HttpResponse('Logout realizado com sucesso')
+    except:
+        return HttpResponse('erro no logout')
+
+
+@require_http_methods(["GET"])
+#@login_required(login_url='/estudantes/alunos/login/')
+@permission_required(perm='estudante.views_alunos', login_url='/estudantes/alunos/login/')
+def test_alunos(request):
+    return HttpResponse('Você está logado corretamente como Aluno')
+
+
 require_http_methods(["GET"])
 def get_alunos(request):
     """Retorna todas as alunos."""
@@ -101,6 +155,56 @@ def delete_matricula(request, id_matricula):
 
 
 """ views dos Pais"""
+@require_http_methods(["GET","POST"])
+def login_pais(request):
+    ''' Login no sistema '''
+    if request.method == 'GET':
+        return render(request, template_name='login.html')
+    elif request.method == 'POST':
+        try:
+            user = Pais.objects.filter(nome_mae=request.POST.get('nome')).first()
+            if user and user.check_password_user(request.POST.get('password')):
+                if user.user is None:
+                    new = User.objects.create_user(
+                        username='Pais ' + user.nome_mae, 
+                        email=user.email, 
+                        password=user.password
+                        )
+                    new.first_name= 'Pais', 
+                    new.last_name=user.nome_mae
+                    perm = Permission.objects.get(codename='views_pais')
+                    new.user_permissions.add(perm)
+                    new.save()
+                    user.user = new
+                    user.save()
+                login(request=request ,user=user.user)
+                return HttpResponse('logado S2')
+            else:
+                return HttpResponse('erro na senha')
+
+        except ObjectDoesNotExist:
+            return HttpResponse('erro de login ou senha')
+
+
+@require_http_methods(["GET"])
+#@login_required(login_url='/estudantes/pais/login/')
+@permission_required(perm='estudante.views_pais', login_url='/estudantes/pais/login/')
+def logout_pais(request):
+    ''' Logout no sistema '''
+    try:
+        logout(request)
+        return HttpResponse('Logout realizado com sucesso')
+    except:
+        return HttpResponse('erro no logout')
+
+
+@require_http_methods(["GET"])
+#@login_required(login_url='/estudantes/pais/login/')
+@permission_required(perm='estudante.views_pais', login_url='/estudantes/pais/login/')
+def test_pais(request):
+    return HttpResponse('Você está logado corretamente como Pais')
+
+
 require_http_methods(["GET"])
 def get_pais(request):
     """Retorna todos os pais."""
@@ -142,6 +246,56 @@ def delete_pais(request, pais_id):
 
 
 """ views dos Egressos"""
+@require_http_methods(["GET","POST"])
+def login_egresso(request):
+    ''' Login no sistema '''
+    if request.method == 'GET':
+        return render(request, template_name='login.html')
+    elif request.method == 'POST':
+        try:
+            user = Egresso.objects.filter(nome_egresso=request.POST.get('nome')).first()
+            if user and user.check_password_user(request.POST.get('password')):
+                if user.user is None:
+                    new = User.objects.create_user(
+                        username='Egresso ' + user.nome_egresso, 
+                        email=user.email, 
+                        password=user.password
+                        )
+                    new.first_name= 'Egresso', 
+                    new.last_name=user.nome_egresso
+                    perm = Permission.objects.get(codename='views_egresso')
+                    new.user_permissions.add(perm)
+                    new.save()
+                    user.user = new
+                    user.save()
+                login(request=request ,user=user.user)
+                return HttpResponse('logado S2')
+            else:
+                return HttpResponse('erro na senha')
+
+        except ObjectDoesNotExist:
+            return HttpResponse('erro de login ou senha')
+
+
+@require_http_methods(["GET"])
+#@login_required(login_url='/estudantes/egresso/login/')
+@permission_required(perm='estudante.views_egresso', login_url='/estudantes/egresso/login/')
+def logout_egresso(request):
+    ''' Logout no sistema '''
+    try:
+        logout(request)
+        return HttpResponse('Logout realizado com sucesso')
+    except:
+        return HttpResponse('erro no logout')
+
+
+@require_http_methods(["GET"])
+#@login_required(login_url='/estudantes/egresso/login/')
+@permission_required(perm='estudante.views_egresso', login_url='/estudantes/egresso/login/')
+def test_egresso(request):
+    return HttpResponse('Você está logado corretamente como Egresso')
+
+
 require_http_methods(["GET"])
 def get_egresso(request):
     """Retorna todos os egressos."""

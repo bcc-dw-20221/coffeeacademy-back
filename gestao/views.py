@@ -8,7 +8,7 @@ from django.shortcuts import HttpResponse
 from django.core import serializers
 
 from django.contrib.auth import get_user_model, login, logout
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Permission
 from django.contrib.auth.hashers import check_password
 
 from django.views.decorators.http import require_http_methods
@@ -17,7 +17,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from gestao.models import Professor, Coordenador, Gestor
 from django.core.exceptions import ObjectDoesNotExist
 
-from django.contrib.auth.models import Permission
 
 '''
 views Professor
@@ -39,10 +38,12 @@ def login_professor(request):
                         )
                     new.first_name= 'Professor', 
                     new.last_name=user.nome
+                    perm = Permission.objects.get(codename='views_professor')
+                    new.user_permissions.add(perm)
                     new.save()
                     user.user = new
                     user.save()
-                login(request=request ,user=user.user)
+                login(request=request, user=user.user)
                 return HttpResponse('logado S2')
             else:
                 return HttpResponse('erro na senha')
@@ -52,6 +53,8 @@ def login_professor(request):
 
 
 @require_http_methods(["GET"])
+#@login_required(login_url='/gestao/professor/login/')
+@permission_required(perm='gestao.views_professor', login_url='/gestao/professor/login/')
 def logout_professor(request):
     ''' Logout no sistema '''
     try:
@@ -63,9 +66,9 @@ def logout_professor(request):
 
 @require_http_methods(["GET"])
 #@login_required(login_url='/gestao/professor/login/')
-#@permission_required('gestao|professor|Can view professor', login_url='/gestao/professor/login/')
+@permission_required(perm='gestao.views_professor', login_url='/gestao/professor/login/')
 def test_professor(request):
-    return HttpResponse('Você está logado corretamente')
+    return HttpResponse('Você está logado corretamente como Professor')
 
 
 @require_http_methods(["GET"])
@@ -110,6 +113,7 @@ def post_professor(request):
 
 
 @require_http_methods(["GET"])
+#@permission_required(perm='gestao.views_professor', login_url='/gestao/professor/login/')
 def delete_professor(request, professor_id):
     """Deleta um professor"""
     professor = Professor.objects.get(pk=professor_id)
@@ -138,6 +142,8 @@ def login_coordenador(request):
                         )
                     new.first_name= 'Coordenador', 
                     new.last_name=user.nome
+                    perm = Permission.objects.get(codename='views_coordenador')
+                    new.user_permissions.add(perm)
                     new.save()
                     user.user = new
                     user.save()
@@ -151,6 +157,8 @@ def login_coordenador(request):
 
 
 @require_http_methods(["GET"])
+#@login_required(login_url='/gestao/coordenador/login/')
+@permission_required(perm='gestao.views_coordenador', login_url='/gestao/coordenador/login/')
 def logout_coordenador(request):
     ''' Logout no sistema '''
     try:
@@ -161,9 +169,10 @@ def logout_coordenador(request):
 
 
 @require_http_methods(["GET"])
-@login_required(login_url='/gestao/coordenador/login/')
+#@login_required(login_url='/gestao/coordenador/login/')
+@permission_required(perm='gestao.views_coordenador', login_url='/gestao/coordenador/login/')
 def test_coordenador(request):
-    return HttpResponse('Você está logado corretamente')
+    return HttpResponse('Você está logado corretamente como Coordenador')
 
 
 @require_http_methods(["GET"])
@@ -206,6 +215,7 @@ def post_coordenador(request):
 
 
 @require_http_methods(["DELETE"])
+#@permission_required(perm='gestao.views_coordenador', login_url='/gestao/coordenador/login/')
 def delete_coordenador(request, coordenador_id):
     coordenador = Coordenador.objects.get(pk=coordenador_id)
     coordenador.delete()
@@ -232,6 +242,8 @@ def login_gestor(request):
                         )
                     new.first_name= 'Gestor', 
                     new.last_name=user.nome
+                    perm = Permission.objects.get(codename='views_gestor')
+                    new.user_permissions.add(perm)
                     new.save()
                     user.user = new
                     user.save()
@@ -245,7 +257,8 @@ def login_gestor(request):
 
 
 @require_http_methods(["GET"])
-@login_required(login_url='/gestao/gestor/login/')
+#@login_required(login_url='/gestao/gestor/login/')
+@permission_required(perm='gestao.views_gestor', login_url='/gestao/gestor/login/')
 def logout_gestor(request):
     ''' Logout no sistema '''
     try:
@@ -257,9 +270,9 @@ def logout_gestor(request):
 
 @require_http_methods(["GET"])
 #@login_required(login_url='/gestao/gestor/login/')
-@permission_required('Gestor', login_url='/gestao/gestor/login/')
+@permission_required(perm='gestao.views_gestor', login_url='/gestao/gestor/login/')
 def test_gestor(request):
-    return HttpResponse('Você está logado corretamente')
+    return HttpResponse('Você está logado corretamente como Gestor')
 
 
 @require_http_methods(["GET"])
@@ -302,6 +315,7 @@ def post_gestor(request):
 
 
 @require_http_methods(["DELETE"])
+#@permission_required(perm='gestao.views_gestor', login_url='/gestao/gestor/login/')
 def delete_gestor(request, gestor_id):
     gestor = Gestor.objects.get(pk=gestor_id)
     gestor.delete()
